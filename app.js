@@ -5,6 +5,11 @@ const day = require(__dirname + "/days.js");
 const mongoose = require('mongoose');
 require('dotenv').config();
 const _ = require("lodash");
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 const url ="mongodb+srv://"+process.env.user+":"+process.env.password+process.env.cluster+".mongodb.net/toDOListDB?retryWrites=true&w=majority";
 mongoose.connect(url,{useNewUrlParser: true }).then(function(){
     item.find().then(function (items) {
@@ -28,11 +33,7 @@ mongoose.connect(url,{useNewUrlParser: true }).then(function(){
 
 
 
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
 const itemSchema = new mongoose.Schema({
     name: {
         type: String,
